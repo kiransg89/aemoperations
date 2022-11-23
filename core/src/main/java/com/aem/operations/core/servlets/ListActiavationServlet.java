@@ -12,11 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-
 import javax.jcr.Session;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-
 import com.aem.operations.core.models.ListTreeActivationModel;
 import com.aem.operations.core.utils.RetryUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.adobe.acs.commons.data.CompositeVariant;
 import com.adobe.acs.commons.data.Spreadsheet;
 import com.adobe.granite.rest.Constants;

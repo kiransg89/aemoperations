@@ -2,10 +2,8 @@ package com.aem.operations.core.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-
 import com.aem.operations.core.models.PackageHandlerModel;
 import com.aem.operations.core.services.PackageHandlerService;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +20,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.adobe.granite.rest.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

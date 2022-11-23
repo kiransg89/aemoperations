@@ -5,7 +5,6 @@ import com.adobe.granite.rest.Constants;
 import com.aem.operations.core.models.PackageCreatorModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.vault.fs.io.AccessControlHandling;
 import org.apache.jackrabbit.vault.packaging.*;
@@ -20,7 +19,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.Servlet;

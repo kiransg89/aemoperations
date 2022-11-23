@@ -1,16 +1,13 @@
 package com.aem.operations.core.models;
 
 import javax.inject.Named;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-
 import com.adobe.acs.commons.mcp.form.FormField;
 import com.adobe.acs.commons.mcp.form.GeneratedDialog;
 import com.adobe.acs.commons.mcp.form.SelectComponent;
-
 import lombok.Getter;
 import lombok.Setter;
 
