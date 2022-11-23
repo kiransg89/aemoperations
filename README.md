@@ -12,16 +12,16 @@ Tools are essential part of AEM and avoids any dependency with Groovy scripts or
 
 For more information visit my bog here :
 
-## 1. Package Creator
+## 1. Package Creator -> https://kiransg.com/2022/11/26/aem-tool-create-a-package-using-a-list-of-paths/
    ![](Image/package_creator_result.png)
 
-## 2. Perfect Content Package
+## 2. Perfect Content Package -> https://kiransg.com/2022/11/27/aem-tool-perfect-content-backup-package-in-aem/
    ![](Image/perfect_package_results.png)
 
-## 3. List Replication
+## 3. List Replication -> https://kiransg.com/2022/11/28/aem-tool-publish-unpublish-delete-list-of-pages/
    ![](Image/list_result.png)
 
-## 4. Package Handler
+## 4. Package Handler -> https://kiransg.com/2022/11/29/aem-tool-access-crx-package-manager-in-aem-prod/
    ![](Image/package_handler_result.png)
 
 ## Modules
