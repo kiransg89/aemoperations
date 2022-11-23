@@ -1,0 +1,2 @@
+#base=js
+package-creator-action.js

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Package Creator to create pages based on path"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Package Creator"
+    href="/conf/aemoperations/settings/tools/create-package-initiator.html"
+    icon="folderGear"
+    id="aemoperations__package-creator"
+    target="_blank"/>

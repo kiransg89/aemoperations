@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Package Handler to operate on packages"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Package Handler"
+    href="/conf/aemoperations/settings/tools/packagehandler-initiator.html"
+    icon="gift"
+    id="aemoperations__package-handler"
+    target="_blank"/>

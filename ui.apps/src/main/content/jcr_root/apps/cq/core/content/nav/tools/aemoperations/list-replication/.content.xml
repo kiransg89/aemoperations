@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="List Replication to replicate content"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="List Replication"
+    href="/conf/aemoperations/settings/tools/listreplication-initiator.html"
+    icon="publish"
+    id="aemoperations__list-repliaction"
+    target="_blank"/>
