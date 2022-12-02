@@ -36,6 +36,7 @@ var Coral = window.Coral || {},
 
         $(document).off("change", ".close").on("change", ".close", function (event) {
             $(".modal").hide();
+            getStatus(false);
         });
 
         function getValueByName(fieldName, isMandatory) {
@@ -88,6 +89,7 @@ var Coral = window.Coral || {},
 
 			$(".loading").html("PLEASE WAIT "+packageOperation+"ING PACKAGE");
 			$(".modal").show();
+			getStatus(true);
 
             $.ajax({
                 url: "/bin/triggerPackageHandler",
@@ -109,11 +111,13 @@ var Coral = window.Coral || {},
                     dialog.closable = "on";
                     dialog.show();
 					$(".modal").hide();
+					getStatus(false);
                 }else{
                     ui.notify("Error", "Unable to process package operation", "error");
                 }
             }).fail(function (data) {
 				$(".modal").hide();
+				getStatus(false);
                 if (data && data.responseJSON && data.responseJSON.message){
                     ui.notify("Error", data.responseJSON.message, "error");
                 }else{
@@ -121,5 +125,48 @@ var Coral = window.Coral || {},
                 }
             });
         });
+
+        function getStatus(showStatus) {
+         $.ajax({
+            // add the servlet path
+            url: "/bin/cpustatust",
+            method: "GET",
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false
+         }).done(function (data) {
+            if (data) {
+               data = JSON.parse(data);
+               $("#table-body").append(`<tr>
+						<td>${data.cpu}/${data.maxCpu}</td>
+			            <td>${data.mem}/${data.maxMem}</td>
+		           		 </tr>`);
+            } else {
+               $(".modal").hide();
+               showStatus = false;
+               ui.notify("Error", "Unable to get the status", "error");
+            }
+         }).fail(function (data) {
+            $(".modal").hide();
+            showStatus = false;
+            if (data && data.responseJSON && data.responseJSON.message) {
+               ui.notify("Error", data.responseJSON.message, "error");
+            } else {
+               //add error message
+               ui.notify("Error", "Unable to get the status", "error");
+            }
+         });
+         if (showStatus) {
+            setTimeout(() => {
+               emptyResults();
+               getStatus(true);
+            }, 2000);
+         }
+      }
+
+     function emptyResults() {
+      $("#table-body").empty();
+     }
     });
 })(window, document, $, Coral);

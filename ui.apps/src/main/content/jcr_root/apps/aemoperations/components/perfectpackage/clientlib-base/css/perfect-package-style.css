@@ -136,3 +136,18 @@
          background-size: 80px 80px;
     }
 }
+
+#table-data{
+	width: 35%;
+    margin: auto;
+    color: #FFF;
+    font-size: 35px;
+}
+
+#table-body td {
+	padding: 1em;
+	text-align: center;
+	word-break: break-word;
+	color: #FFF;
+    font-size: 30px;
+}
