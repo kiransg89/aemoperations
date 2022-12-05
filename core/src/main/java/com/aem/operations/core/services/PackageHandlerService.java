@@ -6,9 +6,10 @@ import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.gson.JsonArray;
+
 public interface PackageHandlerService {
 
-	
 	/**
 	 * @param resourceResolver
 	 * @param inputPackage
@@ -24,7 +25,7 @@ public interface PackageHandlerService {
 	 * @return
 	 */
 	public String buildPackage(ResourceResolver resourceResolver, final String groupName, final String packageName,
-			final String version);
+							   final String version);
 
 	/**
 	 * @param resourceResolver
@@ -36,7 +37,7 @@ public interface PackageHandlerService {
 	 * @return package Path
 	 */
 	public String installPackage(ResourceResolver resourceResolver, final String groupName, final String packageName,
-			final String version, final ImportMode importMode, final AccessControlHandling aclHandling);
+								 final String version, final ImportMode importMode, final AccessControlHandling aclHandling);
 
 	/**
 	 * @param resourceResolver
@@ -53,5 +54,11 @@ public interface PackageHandlerService {
 	 * @return package Path
 	 */
 	public String deletePackage(ResourceResolver resourceResolver, final String groupName, final String packageName,
-			final String version);
+								final String version);
+
+	/**
+	 * @param resourceResolver
+	 * @return jsonresponse
+	 */
+	public JsonArray listPackages(ResourceResolver resourceResolver);
 }

@@ -151,3 +151,22 @@
 	color: #FFF;
     font-size: 30px;
 }
+
+#package-table-head tr {
+	position: sticky;
+	top: 0;
+	background: #f0f0f0;
+}
+
+#package-table-head th {
+	padding: 1em;
+	text-align: left;
+}
+
+#package-table-body td {
+	padding: 1em;
+	border: 1px solid #e9e9e9;
+	text-align: left;
+	background: #fff;
+	word-break: break-word;
+}

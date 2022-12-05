@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+
 import com.aem.operations.core.models.PackageHandlerModel;
 import com.aem.operations.core.services.PackageHandlerService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +21,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.adobe.granite.rest.Constants;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @Component(
@@ -37,6 +40,10 @@ public class PackageHandlerServlet extends SlingAllMethodsServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageHandlerServlet.class);
     public static final String RESOURCE_PATH = "/bin/triggerPackageHandler";
     private static final String MESSAGE = "message";
+
+    private static final String BUILD = "BUILD";
+    private static final String INSTALL = "INSTALL";
+    private static final String DELETE = "DELETE";
 
     @Reference
     private PackageHandlerService packageHandlerService;
@@ -59,13 +66,13 @@ public class PackageHandlerServlet extends SlingAllMethodsServlet {
         String packagePath = StringUtils.EMPTY;
         if (StringUtils.equalsIgnoreCase(PackageHandlerModel.Mode.UPLOAD.toString(), packageOperation)) {
             packagePath = packageHandlerService.uploadPack(resourceResolver, inputPackStream);
-        } else  if(StringUtils.equalsIgnoreCase(PackageHandlerModel.Mode.BUILD.toString(), packageOperation)) {
+        } else  if(StringUtils.equalsIgnoreCase(BUILD, packageOperation)) {
             packagePath = packageHandlerService.buildPackage(resourceResolver, packageGroup, packageName, packageVersion);
         } else if(StringUtils.equalsIgnoreCase(PackageHandlerModel.Mode.UPLOAD_INSTALL.toString(), packageOperation)) {
             packagePath = packageHandlerService.uploadAndInstallPack(resourceResolver, inputPackStream);
-        } else if(StringUtils.equalsIgnoreCase(PackageHandlerModel.Mode.INSTALL.toString(), packageOperation)) {
+        } else if(StringUtils.equalsIgnoreCase(INSTALL, packageOperation)) {
             packagePath = packageHandlerService.installPackage(resourceResolver, packageGroup, packageName, packageVersion, ImportMode.REPLACE, AccessControlHandling.IGNORE);
-        } else if(StringUtils.equalsIgnoreCase(PackageHandlerModel.Mode.DELETE.toString(), packageOperation)) {
+        } else if(StringUtils.equalsIgnoreCase(DELETE, packageOperation)) {
             packagePath = packageHandlerService.deletePackage(resourceResolver, packageGroup, packageName, packageVersion);
         }
         if(StringUtils.isNotEmpty(packagePath)) {
@@ -73,6 +80,14 @@ public class PackageHandlerServlet extends SlingAllMethodsServlet {
         } else {
             LOGGER.error("Unable to process package operation");
         }
+        try (PrintWriter out = response.getWriter()) {
+            out.print(new Gson().toJson(jsonResponse));
+        }
+    }
+
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        JsonArray jsonResponse = packageHandlerService.listPackages(request.getResourceResolver());
         try (PrintWriter out = response.getWriter()) {
             out.print(new Gson().toJson(jsonResponse));
         }

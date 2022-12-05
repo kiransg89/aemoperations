@@ -31,6 +31,14 @@
          </betty-titlebar-title>
          <betty-titlebar-primary></betty-titlebar-primary>
          <betty-titlebar-secondary>
+            <i class="coral-Icon coral-Icon--infoCircle docs-ThemeSwitcher-icon" data-init="quicktip"
+               data-quicktip-arrow="right" data-quicktip-type="info"
+               data-quicktip-content="Add Folder Settings to generate Tool Page">
+            </i>
+            <a href="/mnt/overlay/acs-commons/components/utilities/genericlist.html?item=/etc/acs-commons/lists/package-settings-list/package-settings"
+               is="coral-anchorbutton" variant="info" icon="folderGear" iconsize="S">
+               Package Settings
+            </a>
          </betty-titlebar-secondary>
       </betty-titlebar>
    </div>
@@ -49,9 +57,16 @@
             </coral-button-label>
          </button>
       </coral-actionbar-item>
+      <div class="content-wrapper">
+         <table id="data" style="width: 100%;">
+            <thead id="package-table-head">
+            </thead>
+            <tbody id="package-table-body">
+            </tbody>
+         </table>
+      </div>
       <!-- The Modal -->
       <div id="popup-modal" class="modal">
-
          <!-- Modal content -->
          <div class="modal-content">
             <span class="close">&times;</span>
