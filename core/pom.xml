@@ -47,6 +47,7 @@
                             <bnd>
                                 <![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
+-includeresource: jsoup*.jar;lib:=true,org.apache.sling.resource.filter-*.jar;lib:=true,opencsv*.jar;lib:=true,commons-beanutils*.jar;lib:=true,commons-text*.jar;lib:=true
                                 ]]>
                             </bnd>
                         </configuration>
@@ -244,6 +245,18 @@ Import-Package: javax.annotation;version=0.0.0,*
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.resource.filter</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
         </dependency>
     </dependencies>
 </project>

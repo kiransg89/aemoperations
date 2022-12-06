@@ -821,6 +821,21 @@ Bundle-DocURL:
         <version>3.0.1</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.opencsv</groupId>
+        <artifactId>opencsv</artifactId>
+        <version>5.7.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.10.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
