@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 public class AssetReferenceServiceImpl implements AssetReferenceService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssetReferenceServiceImpl.class);
-    public static final String ADMINISTRATIVE_SERVICE_USER = "aarp-administrative-service-user";
+    public static final String ADMINISTRATIVE_SERVICE_USER = "operations-administrative-service-user";
 
     public static final String JOB_STATUS = "jobStatus";
     public static final String STARTING_STATUS = "starting";
