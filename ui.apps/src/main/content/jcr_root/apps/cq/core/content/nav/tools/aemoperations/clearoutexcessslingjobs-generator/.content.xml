@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Clear Out Excess Sling Jobs -  try clearing the replication queues or any blocked queues"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Clear Out Excess Sling Jobs"
+    href="/conf/aemoperations/settings/tools/clearoutexcessslingjobs-initiator.html"
+    icon="deleteOutline"
+    id="clearoutexcessslingjobs_generator"
+    target="_blank"/>

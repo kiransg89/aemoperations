@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <link rel="shortcut icon" href="/libs/granite/core/content/login/favicon.ico">
+</head>
+<body class="coral--light foundation-layout-util-maximized-alt">
+<sly data-sly-call="${clientLib.all @ categories=['coralui3','granite.ui.coral.foundation','granite.ui.shell','cq.authoring.dialog', 'clearoutexcessslingjobs.base']}"
+     data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"/>
+<coral-shell-header aria-hidden="false" aria-label="Header Bar"
+                    class="coral--dark granite-shell-header coral3-Shell-header"
+                    role="region">
+    <coral-shell-header-home aria-level="2" class="globalnav-toggle" data-globalnav-toggle-href="/" role="heading">
+        <a class="coral3-Shell-homeAnchor" href="/"
+           icon="adobeExperienceManagerColor" is="coral-shell-homeanchor"
+           style="display: inline-block; padding-right: 0;">
+            <coral-icon
+                aria-label="adobe experience manager color"
+                class="coral3-Icon coral3-Shell-homeAnchor-icon coral3-Icon--adobeExperienceManagerColor coral3-Icon--sizeM"
+                icon="adobeExperienceManagerColor" role="img"
+                size="M"></coral-icon>
+            <coral-shell-homeanchor-label>Adobe Experience Manager
+            </coral-shell-homeanchor-label>
+        </a>
+        <span style="line-height: 2.375rem;">/ AEM Operations / ${properties.jcr:title} </span>
+    </coral-shell-header-home>
+</coral-shell-header>
+<div class="foundation-layout-panel">
+    <div class="foundation-layout-panel-header">
+        <betty-titlebar>
+            <betty-titlebar-title>
+                <span aria-level="1" class="granite-title" role="heading">${properties.jcr:title}</span>
+            </betty-titlebar-title>
+            <betty-titlebar-primary></betty-titlebar-primary>
+            <betty-titlebar-secondary>
+            </betty-titlebar-secondary>
+        </betty-titlebar>
+    </div>
+    <div class="content-container-inner coral-Well" style="width:60%; margin:0 auto;">
+        <sly data-sly-use.packprops="com.aem.operations.core.models.ClearOutExcessSlingJobsModel">
+            <sly data-sly-resource="${packprops.formResource}"/>
+            <h3>${packprops.numberOfQueuedJobs}</h3>
+            <h3>${packprops.numberOfActiveJobs}</h3>
+            <h3>${packprops.lastOfQueuedJobs}</h3>
+            <div clas="coral-Form-fieldset">
+                <br>
+                <coral-search placeholder="Search Results" class="coral-Form-field" name="./table-search"
+                              id="redirect-search-box" />
+                </coral-search>
+            </div>
+            <div class="content-wrapper">
+                <table id="data" style="width: 100%;">
+                    <thead id="package-table-head">
+                    <tr>
+                        <th>Topic Name</th>
+                        <th>Active</th>
+                        <th>All</th>
+                        <th>Cancelled</th>
+                        <th>Dropped</th>
+                        <th>Error</th>
+                        <th>Give Up</th>
+                        <th>History</th>
+                        <th>Queued</th>
+                        <th>Stopped</th>
+                        <th>Succeeded</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="package-table-body" data-sly-list.jobBean="${packprops.slingJobStatus}">
+                    <tr class="search-row">
+                        <td class="jobTopic">${jobBean.jobTopic}</td>
+                        <td class="activeJobs">${jobBean.activeJobs}</td>
+                        <td class="allJobs">${jobBean.allJobs}</td>
+                        <td class="cancelledJobs">${jobBean.cancelledJobs}</td>
+                        <td class="droppedJobs">${jobBean.droppedJobs}</td>
+                        <td class="errorJobs">${jobBean.errorJobs}</td>
+                        <td class="givenUpJobs">${jobBean.givenUpJobs}</td>
+                        <td class="historyJobs">${jobBean.historyJobs}</td>
+                        <td class="queuedJobs">${jobBean.queuedJobs}</td>
+                        <td class="stoppedJobs">${jobBean.stoppedJobs}</td>
+                        <td class="succeededJobs">${jobBean.succeededJobs}</td>
+                        <td>
+                            <coral-icon style="cursor: pointer;color:#c83728" alt="delete" class="delete-job coral3-Icon coral3-Icon--sizeS coral3-Icon--delete" icon="delete" size="M"></coral-icon>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </sly>
+        <!-- The Modal -->
+        <div id="popup-modal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <span class="loading">Loading</span>
+                <span class="loader"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
