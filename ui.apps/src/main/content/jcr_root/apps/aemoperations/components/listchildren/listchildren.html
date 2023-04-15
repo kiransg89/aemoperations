@@ -1,0 +1,32 @@
+<!--/*
+    Copyright 2015 Adobe Systems Incorporated
+  
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+  
+        http://www.apache.org/licenses/LICENSE-2.0
+  
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/-->
+<p data-sly-test="${properties.text}">Text property: ${properties.text}</p>
+
+<sly data-sly-use.hello="com.aem.operations.core.models.ListChildren">
+    <h1>Path selected is : ${properties.linkURL}</h1>
+    <h2>List all the children approach:</h2>
+    <h3>Using Streams</h3>
+    <p>Execution Time in milliseconds: ${hello.streamExecution}</p>
+    <p>Execution Results count: ${hello.streamExecutionResults}</p>
+
+    <h3>Using Page List children</h3>
+    <p>Execution Time in milliseconds: ${hello.iteratorExecution}</p>
+    <p>Execution Results count: ${hello.iteratorExecutionResults}</p>
+
+    <h3>Using Query</h3>
+    <p>Execution Time in milliseconds: ${hello.queryExecution}</p>
+    <p>Execution Results count: ${hello.queryExecutionResults}</p>
+</sly>
