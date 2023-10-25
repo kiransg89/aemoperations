@@ -5,7 +5,7 @@ var Coral = window.Coral || {},
     "use strict";
     $(document).on("foundation-contentloaded", function (e) {
 
-        var SITE_PATH = "/conf/uxdia/settings/tools/componentandtemplateauditor-initiator.html",
+        var SITE_PATH = "/conf/aemoperations/settings/tools/componentandtemplateauditor-initiator.html",
             ui = $(window).adaptTo("foundation-ui");
 
         if (window.location.href.indexOf(SITE_PATH) < 0) {
