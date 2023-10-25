@@ -3,6 +3,6 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         jcr:primaryType="cq:PageContent"
-        jcr:title="Clear Out Excess Sling Jobs"
-        sling:resourceType="aemoperations/components/clearoutexcessslingjobs"/>
+        jcr:title="Component and Template Auditor"
+        sling:resourceType="aemoperations/components/componentandtemplateauditor"/>
 </jcr:root>

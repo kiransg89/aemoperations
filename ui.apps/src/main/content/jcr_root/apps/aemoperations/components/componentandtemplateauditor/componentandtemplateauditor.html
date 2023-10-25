@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+   <link rel="shortcut icon" href="/libs/granite/core/content/login/favicon.ico">
+</head>
+<body class="coral--light foundation-layout-util-maximized-alt">
+   <sly data-sly-call="${clientLib.all @ categories=['coralui3','granite.ui.coral.foundation','granite.ui.shell','cq.authoring.dialog', 'componentandtemplateauditor.base']}"
+      data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"/>
+   <coral-shell-header aria-hidden="false" aria-label="Header Bar"
+      class="coral--dark granite-shell-header coral3-Shell-header"
+      role="region">
+      <coral-shell-header-home aria-level="2" class="globalnav-toggle" data-globalnav-toggle-href="/" role="heading">
+         <a class="coral3-Shell-homeAnchor" href="/"
+            icon="adobeExperienceManagerColor" is="coral-shell-homeanchor"
+            style="display: inline-block; padding-right: 0;">
+            <coral-icon
+               aria-label="adobe experience manager color"
+               class="coral3-Icon coral3-Shell-homeAnchor-icon coral3-Icon--adobeExperienceManagerColor coral3-Icon--sizeM"
+               icon="adobeExperienceManagerColor" role="img"
+               size="M"></coral-icon>
+            <coral-shell-homeanchor-label>Adobe Experience Manager
+            </coral-shell-homeanchor-label>
+         </a>
+         <span style="line-height: 2.375rem;">/ AEM Operations / ${properties.jcr:title} </span>
+      </coral-shell-header-home>
+   </coral-shell-header>
+   <div class="foundation-layout-panel">
+      <div class="foundation-layout-panel-header">
+         <betty-titlebar>
+            <betty-titlebar-title>
+               <span aria-level="1" class="granite-title" role="heading">${properties.jcr:title}</span>
+            </betty-titlebar-title>
+            <betty-titlebar-primary></betty-titlebar-primary>
+             <betty-titlebar-secondary>
+             </betty-titlebar-secondary>
+         </betty-titlebar>
+      </div>
+      <div class="content-container-inner coral-Well" style="width:60%; margin:0 auto;">
+         <sly data-sly-use.packprops="com.aem.operations.core.models.ComponentandTemplateAuditorModel">
+            <sly data-sly-resource="${packprops.formResource}"/>
+         </sly>
+          <div class="acsCommons-System-Notifications-Form-row">
+              <label class="coral-Form-fieldlabel">Search Paths</label>
+              <label> Note: Add the list of paths has a Line feed (No need for comma separation)</label>
+              <textarea
+                  class="coral-Textfield coral-Textfield--multiline acsCommons-System-Notifications-Page-input--textarea"
+                  rows="6"
+                  name="./searchPaths"></textarea>
+          </div>
+         <coral-actionbar-item class="coral3-ActionBar-item">
+            <button class="coral3-Button coral3-Button--primary activation-initiator" icon="browse" iconsize="S"
+               is="coral-button"
+               size="M" variant="primary">
+               <coral-icon alt="" class="coral3-Icon coral3-Icon--sizeS coral3-Icon--browse" icon="browse"
+                  size="S"></coral-icon>
+               <coral-button-label>
+                  Start Auditing
+               </coral-button-label>
+            </button>
+         </coral-actionbar-item>
+          <div clas="coral-Form-fieldset">
+              <br>
+              <coral-search placeholder="Search Results" class="coral-Form-field" name="./table-search"
+                            id="redirect-search-box" />
+              </coral-search>
+          </div>
+          <div class="content-wrapper">
+              <table id="data" style="width: 100%;">
+                  <thead id="component-table-head">
+                  <tr>
+                      <th>Component Path</th>
+                      <th>Total Matches</th>
+                  </tr>
+                  </thead>
+                  <tbody id="component-table-body">
+                  </tbody>
+              </table>
+          </div>
+          <!-- The Modal -->
+          <div id="popup-modal" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <span class="loading">Loading</span>
+                  <span class="loader"></span>
+              </div>
+          </div>
+      </div>
+   </div>
+</body>

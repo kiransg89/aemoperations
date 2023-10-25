@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Clean up unused component and Templates by auditing"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Component and Template Auditor"
+    href="/conf/aemoperations/settings/tools/componentandtemplateauditor-initiator.html"
+    icon="printPreview"
+    id="componentandtemplateauditor_generator"
+    target="_blank"/>

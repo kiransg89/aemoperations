@@ -1,0 +1,2 @@
+#base=js
+componentandtemplateauditor-action.js
