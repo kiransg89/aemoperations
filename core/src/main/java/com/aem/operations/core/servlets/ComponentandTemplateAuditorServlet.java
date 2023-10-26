@@ -2,19 +2,22 @@ package com.aem.operations.core.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javax.jcr.Session;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
-import com.adobe.aemds.guide.utils.JcrResourceConstants;
-import com.day.cq.search.PredicateGroup;
-import com.day.cq.search.Query;
-import com.day.cq.search.QueryBuilder;
-import com.day.cq.search.result.SearchResult;
-import com.day.cq.wcm.api.NameConstants;
-import com.day.crx.JcrConstants;
-import com.google.gson.JsonArray;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -24,16 +27,22 @@ import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.servlets.post.JSONResponse;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
+
+import com.adobe.aemds.guide.utils.JcrResourceConstants;
 import com.adobe.granite.rest.Constants;
+import com.aem.operations.core.models.ComponentandTemplateAuditorModel;
+import com.day.cq.search.PredicateGroup;
+import com.day.cq.search.Query;
+import com.day.cq.search.QueryBuilder;
+import com.day.cq.search.result.SearchResult;
+import com.day.cq.wcm.api.NameConstants;
+import com.day.crx.JcrConstants;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-@Component(service = { Servlet.class }, property = { "sling.servlet.paths=" + ComponentandTemplateAuditorServlet.RESOURCE_PATH,
-		"sling.servlet.methods=POST" })
+@Component(service = { Servlet.class }, property = {
+		"sling.servlet.paths=" + ComponentandTemplateAuditorServlet.RESOURCE_PATH, "sling.servlet.methods=POST" })
 public class ComponentandTemplateAuditorServlet extends SlingAllMethodsServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -46,26 +55,41 @@ public class ComponentandTemplateAuditorServlet extends SlingAllMethodsServlet {
 		// Set response headers.
 		response.setContentType(JSONResponse.RESPONSE_CONTENT_TYPE);
 		response.setCharacterEncoding(Constants.DEFAULT_CHARSET);
-		JsonArray jsonArray = new JsonArray();		
+		JsonArray jsonArray = new JsonArray();
 
+		String countPrecision = request.getParameter("countPrecision");
 		String componentsPath = request.getParameter("componentsPath");
 		String searchPaths = request.getParameter("searchPaths");
 
-		@NotNull ResourceResolver resourceResolver = request.getResourceResolver();
-		Set<String> componentList = getComponentsList(resourceResolver, componentsPath, NameConstants.NT_COMPONENT, JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
-		Set<String> templateList = getComponentsList(resourceResolver, componentsPath, NameConstants.NT_TEMPLATE, JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
+		@NotNull
+		ResourceResolver resourceResolver = request.getResourceResolver();
+		Set<String> componentList = getComponentsList(resourceResolver, componentsPath, NameConstants.NT_COMPONENT,
+				JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
+		Set<String> templateList = getComponentsList(resourceResolver, componentsPath, NameConstants.NT_TEMPLATE,
+				JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
 
-		generateRespone(componentList, resourceResolver, searchPaths, jsonArray, JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
-		generateRespone(templateList, resourceResolver, searchPaths, jsonArray, NameConstants.NN_TEMPLATE);
+		if (StringUtils.equalsIgnoreCase(ComponentandTemplateAuditorModel.CountPrecision.APPROXIMATE_TO_5.toString(),
+				countPrecision)) {
+			generateRespone(componentList, resourceResolver, searchPaths, 5, jsonArray,
+					JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
+			generateRespone(templateList, resourceResolver, searchPaths, 5, jsonArray, NameConstants.NN_TEMPLATE);
+		} else {
+			generateRespone(componentList, resourceResolver, searchPaths, -1, jsonArray,
+					JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
+			generateRespone(templateList, resourceResolver, searchPaths, -1, jsonArray, NameConstants.NN_TEMPLATE);
+		}
 
 		try (PrintWriter out = response.getWriter()) {
 			out.print(new Gson().toJson(jsonArray));
 		}
+
 	}
 
-	private void generateRespone(Set<String> componentList, @NotNull ResourceResolver resourceResolver, String searchPaths, JsonArray jsonArray, String propertyType) {
+	private void generateRespone(Set<String> componentList, @NotNull ResourceResolver resourceResolver,
+			String searchPaths, int limit, JsonArray jsonArray, String propertyType) {
 		componentList.forEach(componentPath -> {
-			SearchResult result = executeQuery(resourceResolver, searchPaths, 5, JcrConstants.NT_UNSTRUCTURED, componentPath, propertyType);
+			SearchResult result = executeQuery(resourceResolver, searchPaths, limit, JcrConstants.NT_UNSTRUCTURED,
+					componentPath, propertyType);
 			JsonObject jsonResponse = new JsonObject();
 			jsonResponse.addProperty("componentPath", componentPath);
 			jsonResponse.addProperty("hasMatches", result.getTotalMatches());
@@ -73,9 +97,11 @@ public class ComponentandTemplateAuditorServlet extends SlingAllMethodsServlet {
 		});
 	}
 
-	private Set<String> getComponentsList(@NotNull ResourceResolver resourceResolver, String componentsPath, String resourceType, String propertyType) {
+	private Set<String> getComponentsList(@NotNull ResourceResolver resourceResolver, String componentsPath,
+			String resourceType, String propertyType) {
 		Set<String> componentList = new TreeSet<>();
-		SearchResult result = executeQuery(resourceResolver, componentsPath, -1, resourceType, StringUtils.EMPTY, propertyType);
+		SearchResult result = executeQuery(resourceResolver, componentsPath, -1, resourceType, StringUtils.EMPTY,
+				propertyType);
 		Iterator<Resource> componentResources = result.getResources();
 		StreamSupport.stream(((Iterable<Resource>) () -> componentResources).spliterator(), false).forEach(r -> {
 			componentList.add(r.getPath());
@@ -83,11 +109,13 @@ public class ComponentandTemplateAuditorServlet extends SlingAllMethodsServlet {
 		return componentList;
 	}
 
-	private SearchResult executeQuery(@NotNull ResourceResolver resourceResolver, String root, int limit, String type, String resourceType, String propertyType) {
+	private SearchResult executeQuery(@NotNull ResourceResolver resourceResolver, String root, int limit, String type,
+			String resourceType, String propertyType) {
 		QueryBuilder queryBuilder = (QueryBuilder) Objects.requireNonNull(resourceResolver.adaptTo(QueryBuilder.class));
 		Map<String, String> map = new HashMap<>();
-		Set<String> searchPaths = new HashSet<>(Arrays.asList(StringUtils.split(root, '\n'))).stream().map(String::trim).collect(Collectors.toSet());
-		if(searchPaths.size() <= 1){
+		Set<String> searchPaths = new HashSet<>(Arrays.asList(StringUtils.split(root, '\n'))).stream().map(String::trim)
+				.collect(Collectors.toSet());
+		if (searchPaths.size() <= 1) {
 			map.put("path", root);
 		} else {
 			AtomicInteger atomicInteger = new AtomicInteger(1);
@@ -99,14 +127,15 @@ public class ComponentandTemplateAuditorServlet extends SlingAllMethodsServlet {
 		map.put("type", type);
 		map.put("p.guessTotal", "true");
 		map.put("p.limit", String.valueOf(limit));
-		if(StringUtils.isNotEmpty(resourceType)){
+		if (StringUtils.isNotEmpty(resourceType)) {
 			map.put("group.p.or", "true");
 			map.put("group.1_property", propertyType);
 			map.put("group.1_property.value", resourceType);
 			map.put("group.2_property", propertyType);
-			map.put("group.2_property.value", StringUtils.substringAfter(resourceType, "/apps/") );
+			map.put("group.2_property.value", StringUtils.substringAfter(resourceType, "/apps/"));
 		}
-		Query query = queryBuilder.createQuery(PredicateGroup.create(map), (Session) resourceResolver.adaptTo(Session.class));
+		Query query = queryBuilder.createQuery(PredicateGroup.create(map),
+				(Session) resourceResolver.adaptTo(Session.class));
 		return query.getResult();
 	}
 }

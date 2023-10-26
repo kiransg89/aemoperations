@@ -1,9 +1,9 @@
 var Coral = window.Coral || {},
     Granite = window.Granite || {};
 
-(function (window, document, $, Coral) {
+(function(window, document, $, Coral) {
     "use strict";
-    $(document).on("foundation-contentloaded", function (e) {
+    $(document).on("foundation-contentloaded", function(e) {
 
         var SITE_PATH = "/conf/aemoperations/settings/tools/componentandtemplateauditor-initiator.html",
             ui = $(window).adaptTo("foundation-ui");
@@ -12,7 +12,7 @@ var Coral = window.Coral || {},
             return;
         }
 
-        $(document).off("change", ".close").on("change", ".close", function (event) {
+        $(document).off("change", ".close").on("change", ".close", function(event) {
             $(".modal").hide();
         });
 
@@ -57,23 +57,25 @@ var Coral = window.Coral || {},
 
         function getFileByName(fieldName) {
             var fieldInput = $("input[name='" + fieldName + "']");
-            if(null != fieldInput && null != fieldInput[0]){
+            if (null != fieldInput && null != fieldInput[0]) {
                 return fieldInput[0].files[0];
             }
         }
 
-        $(document).off("click", ".activation-initiator").on("click", ".activation-initiator", function (event) {
+        $(document).off("click", ".activation-initiator").on("click", ".activation-initiator", function(event) {
             event.preventDefault();
-           // reading text fields and files
-           var componentsPath = getValueByName('./componentsPath', false),
-           searchPaths = getValueByNameArea('./searchPaths', true);
+            // reading text fields and files
+            var countPrecision = getValueByName('./countPrecision', false),
+                componentsPath = getValueByName('./componentsPath', false),
+                searchPaths = getValueByNameArea('./searchPaths', true);
 
             var formData = new FormData();
+            formData.append("countPrecision", countPrecision);
             formData.append("componentsPath", componentsPath);
             formData.append("searchPaths", searchPaths);
 
             //Add loading Message here
-			$(".loading").html("in progress");
+            $(".loading").html("in progress");
             $(".modal").show();
 
             $.ajax({
@@ -85,24 +87,24 @@ var Coral = window.Coral || {},
                 contentType: false,
                 processData: false,
                 data: formData
-            }).done(function (data) {
-                if (data && data.length >0) {
-                   for (var i = 0; i < data.length; ++i) {
+            }).done(function(data) {
+                if (data && data.length > 0) {
+                    for (var i = 0; i < data.length; ++i) {
                         $("#component-table-body").append(`<tr class="search-row">
                             <td class="componentPath">${data[i].componentPath}</td>
                             <td class="totalMatchers">${data[i].hasMatches}</td>
                             </tr>`);
-                   }
-                   $(".modal").hide();
+                    }
+                    $(".modal").hide();
                 } else {
-                   $(".modal").hide();
-                   ui.notify("Error", "Unable to execute the search", "error");
+                    $(".modal").hide();
+                    ui.notify("Error", "Unable to execute the search", "error");
                 }
-            }).fail(function (data) {
-				$(".modal").hide();
-                if (data && data.responseJSON && data.responseJSON.message){
+            }).fail(function(data) {
+                $(".modal").hide();
+                if (data && data.responseJSON && data.responseJSON.message) {
                     ui.notify("Error", data.responseJSON.message, "error");
-                }else{
+                } else {
                     //add error message
                     ui.notify("Error", "Unable to process request", "error");
                 }
@@ -110,9 +112,9 @@ var Coral = window.Coral || {},
         });
 
         $(document).on("keyup", "input[name='./table-search']", function() {
-        var value = $(this).val().toLowerCase();
+            var value = $(this).val().toLowerCase();
             $("#component-table-body tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     });
