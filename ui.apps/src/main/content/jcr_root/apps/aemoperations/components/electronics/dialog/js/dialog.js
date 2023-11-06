@@ -1,5 +1,8 @@
 (function($, $document) {
 
+    var flag = false;
+    var errorMessage = 'Error occurred during processing';
+
     $(document).on("foundation-contentloaded", function(e) {
         var value = $("coral-select[name='./country']").val();
         var compPath = $("coral-select[name='./country']").attr("data-component-path");
@@ -14,9 +17,7 @@
         validate: function(el) {
             if ($(el).is(":visible")) {
                 var value = $(el).val();
-                var flag = false;
                 var compPath = $(el).attr("data-component-path");
-                var errorMessage = 'Error occurred during processing';
                 populateItems(compPath, value);
             }
         }

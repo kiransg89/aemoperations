@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Electronics"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.wcm.components.container.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_cmp_container_v1">
+    <content
+        granite:class="cmp-container__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <settings
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Electronics Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <container
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <container
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <devices
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Electronics device settings"
+                                                pickerTitle="Please add Electronics device configs">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./multifield">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <columns
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <countries
+                                                                    granite:class="dropdown-type"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                    fieldDescription="Please select the country"
+                                                                    fieldLabel="Country"
+                                                                    name="./country">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <countrya
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Country A"
+                                                                            value="countryA"/>
+                                                                        <countryb
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Country B"
+                                                                            value="countryB"/>
+                                                                    </items>
+                                                                </countries>
+                                                                <devices
+                                                                    granite:class="dropdown-type"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                    fieldDescription="Please select the devices"
+                                                                    fieldLabel="Devices"
+                                                                    multiple="{Boolean}true"
+                                                                    name="./devices">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <phone
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Phone"
+                                                                            value="phone"/>
+                                                                        <tablet
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Tablet"
+                                                                            value="tablet"/>
+                                                                        <laptop
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Laptop"
+                                                                            value="laptop"/>
+                                                                    </items>
+                                                                </devices>
+                                                            </items>
+                                                        </columns>
+                                                    </items>
+                                                </field>
+                                            </devices>
+                                        </items>
+                                    </container>
+                                </items>
+                            </container>
+                        </items>
+                    </settings>
+                    <styletab
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_design/styletab"/>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
